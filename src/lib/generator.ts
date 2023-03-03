@@ -14,7 +14,7 @@ export function generateGameState(playerIDs: string[]): GameState {
     cid: 'c100b',
     value: 100,
   }];
-  for (let i = 1; i <= 99; i++) {
+  for (let i = 2; i <= 99; i++) {
     allCards.push({
       cid: `c${i}`,
       value: i,

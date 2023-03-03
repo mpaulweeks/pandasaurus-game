@@ -2,8 +2,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { generateGameState } from '@/lib/generator'
 
 const inter = Inter({ subsets: ['latin'] })
+
+console.log(generateGameState(['foo', 'bar']));
 
 export default function Home() {
   return (

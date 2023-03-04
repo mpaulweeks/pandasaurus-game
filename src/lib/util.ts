@@ -18,3 +18,9 @@ export function sortCardState(arr: CardState[], ascending: boolean): CardState[]
   out.sort((a, b) => compareCardData(a.data, b.data));
   return ascending ? out : out.reverse();
 }
+
+export function shuffle<T>(arr: T[]): T[] {
+  const out = arr.concat();
+  out.sort(() => Math.random() < 0.5 ? -1 : 1);
+  return out;
+}

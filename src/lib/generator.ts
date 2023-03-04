@@ -1,5 +1,6 @@
 import { getMaxHandSize } from "./helper";
 import { StackState, CardData, GameState, HandState } from "./types";
+import { shuffle } from "./util";
 
 export function generateGameState(playerIDs: string[]): GameState {
   const board: StackState[] = [{
@@ -20,14 +21,14 @@ export function generateGameState(playerIDs: string[]): GameState {
     cards: [{cid: 'c100b', value: 100, }],
   }];
 
-  const deck: CardData[] = [];
+  const orderedDeck: CardData[] = [];
   for (let i = 2; i <= 99; i++) {
-    deck.push({
+    orderedDeck.push({
       cid: `card-${i}`,
       value: i,
     });
   }
-  // todo shuffle deck
+  const deck = shuffle(orderedDeck);
 
   const handsize = getMaxHandSize(playerIDs.length);
   const hands: HandState[] = playerIDs.map(pid => {

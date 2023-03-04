@@ -1,25 +1,36 @@
 export type CardID = string;
-
-export type CardState = {
-  cid: CardID;
-  value: number;
+export type CardData = {
+  readonly cid: CardID;
+  readonly value: number;
 };
 
-export type DeckState = CardID[];
+export type DeckState = CardData[];
 export type HandState = {
   pid: string;
   name: string;
-  cards: CardID[];
+  cards: CardData[];
 };
-export type BoardState = {
-  bid: string;
+export type StackState = {
+  sid: string;
   ascending: boolean;
-  cards: CardID[];
+  cards: CardData[];
 };
-
+export type BoardState = StackState[];
 export type GameState = {
-  cards: Record<CardID, CardState>;
   deck: DeckState;
   hands: HandState[];
-  board: BoardState[];
+  board: BoardState;
 }
+
+export enum CardLocation {
+  Board = 1,
+  Hand,
+  Deck,
+}
+export type CardState = {
+  readonly data: CardData;
+  readonly visible: boolean;
+  readonly location: CardLocation;
+  readonly position: number;
+}
+export type CardMap = Map<CardID, CardState>;

@@ -1,20 +1,9 @@
 import { CardData, GameState, StackState } from "./types"
-
-function sortCards(arr: CardData[], ascending: boolean) {
-  function compare(a: CardData, b: CardData) {
-    if (a.value < b.value || a.value === b.value + 10) {
-      return -1;
-    }
-    return 1;
-  }
-  const out = arr.concat();
-  out.sort(compare);
-  return ascending ? out : out.reverse();
-}
+import { sortCardData } from "./util";
 
 function canPlay(stack: StackState, card: CardData) {
   const stackTop = stack.cards.slice(-1)[0];
-  const sorted = sortCards([stackTop, card], stack.ascending);
+  const sorted = sortCardData([stackTop, card], stack.ascending);
   return sorted[0].cid === stackTop.cid;
 }
 
@@ -67,7 +56,7 @@ export function executePlays(state: GameState, play: {
     throw new Error('invalid batch plays');
   }
 
-  const sorted = sortCards(cards, stack.ascending);
+  const sorted = sortCardData(cards, stack.ascending);
   let out = state;
   for (const card of sorted) {
     out = executePlay(out, { sid: stack.sid, cid: card.cid, });

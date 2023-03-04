@@ -32,5 +32,6 @@ export type CardState = {
   readonly visible: boolean;
   readonly location: CardLocation;
   readonly position: number;
+  readonly stack: number;
 }
 export type CardMap = Map<CardID, CardState>;

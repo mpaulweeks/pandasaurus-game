@@ -33,18 +33,8 @@ export const GameView = (props: {
   }, [selected]);
 
   const { allCards } = mapCards(state, props.pid);
-
   return (
     <div className={styles.GameBoard}>
-      <section>
-        Board
-      </section>
-      <section>
-        Hand
-      </section>
-      <section>
-        Deck
-      </section>
       {allCards.map(cs => (
         <CardView
           key={cs.data.cid}

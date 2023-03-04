@@ -1,4 +1,5 @@
 import { CardLocation, CardState, GameState } from "./types";
+import { sortCardData, sortCardState } from "./util";
 
 export function mapCards(state: GameState, pid: string): {
   allCards: CardState[];
@@ -11,17 +12,20 @@ export function mapCards(state: GameState, pid: string): {
         data: card,
         location: CardLocation.Board,
         position: pi,
+        stack: ci,
         visible: ci >= arr.length - 2, // show the top 2 cards
       });
     });
   });
 
   state.hands.forEach(hand => {
-    hand.cards.forEach((card, ci) => {
+    const sorted = sortCardData(hand.cards, true);
+    sorted.forEach((card, ci) => {
       allCards.push({
         data: card,
         location: CardLocation.Hand,
         position: ci,
+        stack: ci,
         visible: hand.pid === pid,
       });
     });
@@ -32,11 +36,12 @@ export function mapCards(state: GameState, pid: string): {
       data: card,
       location: CardLocation.Deck,
       position: 0,
+      stack: 0,
       visible: false,
     });
   });
 
   return {
-    allCards,
+    allCards: sortCardState(allCards, true),
   };
 }

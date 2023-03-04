@@ -1,16 +1,16 @@
-import { useBoundingContainer } from "@/hooks/useBoundingContainer";
 import { generateGameState } from "@/lib/generator";
 import { GameView } from "@/views/GameView";
+import styles from './Main.module.css';
 
 export const Solitaire = () => {
-  const {container, Wrapper} = useBoundingContainer();
   return (
-    <Wrapper>
-      {container && <GameView
+    <div className={styles.Main}>
+      <h1>Solitaire</h1>
+      <GameView
         initialState={generateGameState(['p0'])}
         pid="p0"
-        container={container} />}
-    </Wrapper>
+      />
+    </div>
   );
 };
 

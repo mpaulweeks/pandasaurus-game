@@ -1,4 +1,4 @@
-import { DomContainer } from "@/hooks/useBoundingContainer";
+import { DomContainer, useBoundingContainer } from "@/hooks/useBoundingContainer";
 import { executePlays } from "@/lib/executor";
 import { mapCards } from "@/lib/mapper";
 import { CardID, CardLocation, CardState, GameState } from "@/lib/types"
@@ -8,8 +8,8 @@ import { CardView } from "./CardView";
 export const GameView = (props: {
   initialState: GameState;
   pid: string;
-  container: DomContainer<HTMLDivElement>;
 }) => {
+  const {container, Wrapper} = useBoundingContainer();
   const [state, setGameState] = useState<GameState>(props.initialState);
   const [selected, setSelected] = useState<CardID[]>([]);
   const onCardClick = useCallback((cs: CardState) => {
@@ -35,16 +35,20 @@ export const GameView = (props: {
 
   const { allCards } = mapCards(state, props.pid);
   return (
-    <div>
-      {allCards.map(cs => (
-        <CardView
-          key={cs.data.cid}
-          container={props.container}
-          state={cs}
-          selected={selected.includes(cs.data.cid)}
-          onClick={() => onCardClick(cs)}
-        />
-      ))}
-    </div>
+    <Wrapper>
+      {container && (
+        <>
+          {allCards.map(cs => (
+            <CardView
+              key={cs.data.cid}
+              container={container}
+              state={cs}
+              selected={selected.includes(cs.data.cid)}
+              onClick={() => onCardClick(cs)}
+            />
+          ))}
+        </>
+      )}
+    </Wrapper>
   )
 };

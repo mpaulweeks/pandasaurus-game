@@ -37,13 +37,25 @@ export function useBounding<T extends HTMLElement>(
 
 export function useBoundingContainer() {
   const {container, callbackRef} = useBounding<HTMLDivElement>();
+  // div1 ensures it matches the size of the space parent has REMAINING
+  // div2 is 100% of that remaining space
   const Wrapper = useCallback((props: React.PropsWithChildren) => (
-    <div ref={callbackRef} style={{
-      position: 'relative',
-      width: '100%',
-      height: '100%',
+    <div style={{
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'stretch',
+      alignItems: 'stretch',
+      border: '1px solid grey',
+      backgroundColor: '#010',
     }}>
-      {props.children}
+      <div ref={callbackRef} style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+      }}>
+        {props.children}
+      </div>
     </div>
   ), [callbackRef]);
   return { Wrapper, container, };

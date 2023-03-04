@@ -37,7 +37,7 @@ export const CardView = (props: {
     },
     [CardLocation.Deck]: {
       top: 0,
-      right: 0,
+      left: `${bounding.width - smallCard.width}px`,
       width: `${smallCard.width}px`,
       height: `${smallCard.height}px`,
     },

@@ -1,3 +1,4 @@
+import { getMaxHandSize } from "./helper";
 import { StackState, CardData, GameState, HandState } from "./types";
 
 export function generateGameState(playerIDs: string[]): GameState {
@@ -28,7 +29,7 @@ export function generateGameState(playerIDs: string[]): GameState {
   }
   // todo shuffle deck
 
-  const handsize = [8, 7, 6, 6, 6][playerIDs.length] ?? 6;
+  const handsize = getMaxHandSize(playerIDs.length);
   const hands: HandState[] = playerIDs.map(pid => {
     const cards: CardData[] = [];
     for (let i = 0; i < handsize; i++) {

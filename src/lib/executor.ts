@@ -1,3 +1,4 @@
+import { getMaxHandSize } from "./helper";
 import { CardData, GameState, StackState } from "./types"
 import { sortCardData } from "./util";
 
@@ -7,11 +8,15 @@ function canPlay(stack: StackState, card: CardData) {
   return sorted[0].cid === stackTop.cid;
 }
 
+function deepCopy<T>(x: T): T {
+  return JSON.parse(JSON.stringify(x));
+}
+
 export function executePlay(state: GameState, play: {
   sid: string;
   cid: string;
 }): GameState {
-  const out: GameState = JSON.parse(JSON.stringify(state));
+  const out: GameState = deepCopy(state);
 
   // execute
   let card: CardData | undefined;
@@ -61,5 +66,20 @@ export function executePlays(state: GameState, play: {
   for (const card of sorted) {
     out = executePlay(out, { sid: stack.sid, cid: card.cid, });
   }
+  return out;
+}
+
+export function executeEndTurn(state: GameState, pid: string): GameState {
+  const out: GameState = deepCopy(state);
+  const hand = out.hands.filter(h => h.pid === pid)[0];
+  if (!hand) {
+    throw new Error('hand not found: ' + pid);
+  }
+
+  const handSize = getMaxHandSize(out.hands.length);
+  while (hand.cards.length < handSize && out.deck.length > 0) {
+    hand.cards.push(out.deck.pop()!);
+  }
+
   return out;
 }

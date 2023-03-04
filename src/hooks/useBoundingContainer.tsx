@@ -19,11 +19,15 @@ export function useBounding<T extends HTMLElement>(
   }, []);
 
   useEffect(() => {
-    console.log('useEffect element', element, bounding);
-    if (element) {
-      setBounding(element.getBoundingClientRect());
+    function resize() {
+      console.log('resizing');
+      if (element) {
+        setBounding(element.getBoundingClientRect());
+      }
     }
-    // todo listen for resize
+    resize();
+    window.addEventListener('resize', resize);
+    return () => window.removeEventListener('resize', resize);
   }, [element]);
 
   return {

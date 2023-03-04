@@ -24,18 +24,28 @@ export const CardView = (props: {
 
   const absolutePositioning: CSSProperties = {
     [CardLocation.Board]: {
+      fontSize: `${largeCard.height/4}px`,
       top: 0,
       left: `${0 + props.state.position * largeCard.width}px`,
       width: `${largeCard.width}px`,
       height: `${largeCard.height}px`,
+      ...(props.state.position < 2 ? {
+        color: 'black',
+        backgroundColor: 'lightgreen',
+      } : {
+        color: 'black',
+        backgroundColor: 'salmon',
+      }),
     },
     [CardLocation.Hand]: {
+      fontSize: `${smallCard.height/4}px`,
       top: `${bounding.height - smallCard.height}px`,
       left: `${0 + props.state.position * (smallCard.width)}px`,
       width: `${smallCard.width}px`,
       height: `${smallCard.height}px`,
     },
     [CardLocation.Deck]: {
+      fontSize: `${smallCard.height/4}px`,
       top: 0,
       left: `${bounding.width - smallCard.width}px`,
       width: `${smallCard.width}px`,
@@ -55,7 +65,7 @@ export const CardView = (props: {
       onClick={props.onClick}
       style={override}
     >
-     {props.state.data.cid}
+     {props.state.data.value}
     </div>
   );
 }

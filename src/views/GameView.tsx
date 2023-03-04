@@ -1,12 +1,11 @@
-import { DomContainer, useBoundingContainer } from "@/hooks/useBoundingContainer";
+import { DomContainer } from "@/hooks/useBoundingContainer";
 import { executePlays } from "@/lib/executor";
 import { mapCards } from "@/lib/mapper";
 import { CardID, CardLocation, CardState, GameState } from "@/lib/types"
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { CardView } from "./CardView";
-import styles from './Game.module.css';
 
-export const GameBoardView = (props: {
+export const GameView = (props: {
   initialState: GameState;
   pid: string;
   container: DomContainer<HTMLDivElement>;
@@ -49,19 +48,3 @@ export const GameBoardView = (props: {
     </div>
   )
 };
-
-export function GameView(props: {
-  initialState: GameState;
-  pid: string;
-}) {
-  const {container, callbackRef} = useBoundingContainer<HTMLDivElement>();
-  return (
-    <div ref={callbackRef} className={styles.GameBoard}>
-      {container ? (
-        <GameBoardView {...props} container={container} />
-      ) : (
-        <div>loading</div>
-      )}
-    </div>
-  );
-}

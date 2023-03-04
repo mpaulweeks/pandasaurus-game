@@ -5,13 +5,14 @@ export interface DomContainer<T extends HTMLElement> {
   bounding: DOMRect;
 }
 
-export function useBoundingContainer<T extends HTMLElement>(
+export function useBounding<T extends HTMLElement>(
 ): {
   container: DomContainer<T> | null;
   callbackRef: (elm: T) => void;
  } {
   const [element, setElement] = useState<T>();
   const [bounding, setBounding] = useState<DOMRect | undefined>();
+
   const callbackRef = useCallback((elm: T) => {
     console.log('callbackRef', elm);
     setElement(elm);
@@ -32,4 +33,18 @@ export function useBoundingContainer<T extends HTMLElement>(
       bounding,
     } : null,
   };
+}
+
+export function useBoundingContainer() {
+  const {container, callbackRef} = useBounding<HTMLDivElement>();
+  const Wrapper = useCallback((props: React.PropsWithChildren) => (
+    <div ref={callbackRef} style={{
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+    }}>
+      {props.children}
+    </div>
+  ), [callbackRef]);
+  return { Wrapper, container, };
 }

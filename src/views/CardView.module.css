@@ -11,7 +11,11 @@
 
   position: absolute;
 
-  transition-property: top, bottom, left, right, width, height, color;
+  transition-property:
+    top, bottom, left, right,
+    width, height,
+    color, backgroundColor,
+  ;
   transition-duration: 1s;
   transition-timing-function: ease-out;
 }

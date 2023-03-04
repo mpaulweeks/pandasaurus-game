@@ -1,3 +1,4 @@
+import { DomContainer, useBoundingContainer } from "@/hooks/useBoundingContainer";
 import { executePlays } from "@/lib/executor";
 import { mapCards } from "@/lib/mapper";
 import { CardID, CardLocation, CardState, GameState } from "@/lib/types"
@@ -5,9 +6,10 @@ import { useCallback, useState } from "react";
 import { CardView } from "./CardView";
 import styles from './Game.module.css';
 
-export const GameView = (props: {
+export const GameBoardView = (props: {
   initialState: GameState;
   pid: string;
+  container: DomContainer<HTMLDivElement>;
 }) => {
   const [state, setGameState] = useState<GameState>(props.initialState);
   const [selected, setSelected] = useState<CardID[]>([]);
@@ -34,10 +36,11 @@ export const GameView = (props: {
 
   const { allCards } = mapCards(state, props.pid);
   return (
-    <div className={styles.GameBoard}>
+    <div>
       {allCards.map(cs => (
         <CardView
           key={cs.data.cid}
+          container={props.container}
           state={cs}
           selected={selected.includes(cs.data.cid)}
           onClick={() => onCardClick(cs)}
@@ -46,3 +49,19 @@ export const GameView = (props: {
     </div>
   )
 };
+
+export function GameView(props: {
+  initialState: GameState;
+  pid: string;
+}) {
+  const {container, callbackRef} = useBoundingContainer<HTMLDivElement>();
+  return (
+    <div ref={callbackRef} className={styles.GameBoard}>
+      {container ? (
+        <GameBoardView {...props} container={container} />
+      ) : (
+        <div>loading</div>
+      )}
+    </div>
+  );
+}

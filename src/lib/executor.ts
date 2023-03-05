@@ -4,7 +4,10 @@ import { sortCardData } from "./util";
 
 function canPlay(stack: StackState, card: CardData) {
   const stackTop = stack.cards.slice(-1)[0];
-  const sorted = sortCardData([stackTop, card], stack.ascending);
+  const sorted = sortCardData([stackTop, card], {
+    ascending: stack.ascending,
+    check10: true,
+  });
   return sorted[0].cid === stackTop.cid;
 }
 
@@ -61,7 +64,10 @@ export function executePlays(state: GameState, play: {
     throw new Error('invalid batch plays');
   }
 
-  const sorted = sortCardData(cards, stack.ascending);
+  const sorted = sortCardData(cards, {
+    ascending: stack.ascending,
+    check10: true,
+  });
   let out = state;
   for (const card of sorted) {
     out = executePlay(out, { sid: stack.sid, cid: card.cid, });

@@ -19,7 +19,7 @@ export function mapCards(state: GameState, pid: string): {
   });
 
   state.hands.forEach(hand => {
-    const sorted = sortCardData(hand.cards, true);
+    const sorted = sortCardData(hand.cards, { ascending: true, check10: false, });
     sorted.forEach((card, ci) => {
       allCards.push({
         data: card,
@@ -42,6 +42,6 @@ export function mapCards(state: GameState, pid: string): {
   });
 
   return {
-    allCards: sortCardState(allCards, true),
+    allCards: sortCardState(allCards, { ascending: true, check10: false, }),
   };
 }

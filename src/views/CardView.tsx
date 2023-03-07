@@ -45,11 +45,11 @@ export const CardView = (props: {
       height: `${smallCard.height}px`,
     },
     [CardLocation.Deck]: {
-      fontSize: `${smallCard.height/4}px`,
+      fontSize: `${largeCard.height/4}px`,
       top: 0,
-      left: `${bounding.width - smallCard.width}px`,
-      width: `${smallCard.width}px`,
-      height: `${smallCard.height}px`,
+      left: `${bounding.width - largeCard.width}px`,
+      width: `${largeCard.width}px`,
+      height: `${largeCard.height}px`,
     },
   }[props.state.location];
 
@@ -65,7 +65,7 @@ export const CardView = (props: {
       onClick={props.onClick}
       style={override}
     >
-     {props.state.data.value}
+      {props.state.location === CardLocation.Deck ? 'deck' : props.state.data.value}
     </div>
   );
 }

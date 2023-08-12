@@ -1,0 +1,13 @@
+.Home {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.Home button {
+  font-size: 1.5em;
+  padding: 0.5em 1em;
+}

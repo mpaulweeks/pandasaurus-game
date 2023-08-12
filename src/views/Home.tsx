@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './Home.module.css';
 
 export function HomeView() {
@@ -9,14 +10,14 @@ export function HomeView() {
       <div>
         Fan implementation of <a href="https://pandasaurusgames.com/products/the-game-kwanchai-moriya-edition">The Game</a> by Pandasaurus.
         {' '}
-        Read the <a href="RULEBOOK.pdf">Rulebook.pdf</a> for more info.
+        Read the <a href="/RULEBOOK.pdf">Rulebook.pdf</a> for more info.
       </div>
-      <a href='solitaire'>
+      <Link href='/solitaire'>
         <button>Play Alone</button>
-      </a>
-      <a href='lobby?name=bob&lobby=foo'>
+      </Link>
+      <Link href='/lobby?name=bob&lobby=foo'>
         <button>Play Online</button>
-      </a>
+      </Link>
     </main>
   );
 }
